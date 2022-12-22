@@ -73,5 +73,6 @@ jobs:
           bucket: github-actions-arjunank
           dist-folder: ./dist
           # bucket-region: ap-south-1
-      - name: Output URL
-        run: echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
+      - name: Output URL Information
+        run: | 
+          echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
