@@ -68,8 +68,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          s3bucketname: ${{ secrets.S3_BUCKET_NAME }}
         with:
-          bucket: s3bucketname
+          bucket: github-actions-arjunank
           dist-folder: ./dist
           # bucket-region: ap-south-1
