@@ -51,6 +51,9 @@ jobs:
           name: dist-files
           path: dist
   deploy:
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -63,14 +66,19 @@ jobs:
           path: ./dist
       - name: Output contents
         run: ls
+      - name: Get AWS Permission
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::**AWS ACCOUNT ID**:role/github-demo-arjunank
+          aws-region: ap-south-1
       - name: Deploy site
         id: deploy
-        uses: ./.github/actions/deploy-s3-javascript
-        # uses: ./.github/actions/deploy-s3-docker
+        # uses: ./.github/actions/deploy-s3-javascript
+        uses: ./.github/actions/deploy-s3-docker
         # uses: arjunan-k/deploy-s3-docker@v1
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # env:
+          # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         with:
           bucket: github-actions-arjunank
           dist-folder: ./dist
